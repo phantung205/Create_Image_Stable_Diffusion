@@ -1,6 +1,5 @@
 from diffusers import StableDiffusionPipeline, StableDiffusionControlNetPipeline, ControlNetModel
 from configs import settings
-import torch
 from utils import device_utils
 
 
@@ -14,7 +13,9 @@ def load_text2img_pipeline(model_name = settings.default_model):
     pipeline = StableDiffusionPipeline.from_pretrained(
         model_name,
         torch_dtype=dtype,
-        use_safetensors=True
+        use_safetensors=True,
+        safety_checker=None,
+        requires_safety_checker=False
     )
     pipeline.to(device)
 
@@ -36,7 +37,9 @@ def load_controlnet_pipeline():
     pipeline = StableDiffusionControlNetPipeline.from_pretrained(
         settings.base_model_id,
         controlnet=controlnet,
-        torch_dtype=dtype
+        torch_dtype=dtype,
+        safety_checker=None,
+        requires_safety_checker=False
     )
     pipeline.to(device)
 

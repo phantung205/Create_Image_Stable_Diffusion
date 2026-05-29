@@ -3,15 +3,9 @@ from diffusers.utils import load_image
 from configs import settings
 
 
-def generate_controlnet(prompt ,image_path,pipeline,
-                        num_image=settings.num_image,
-                        my_neg_prompt=settings.my_neg_prompt,
-                        guidance_scale=settings.guidance_scale,
-                        num_inference_steps=settings.controlnet_steps,
-                        width=settings.width,
-                        height=settings.height,
-                        controlnet_conditioning_scale=settings.controlnet_strength,
-                    ):
+def generate_controlnet(prompt ,image_path,pipeline,num_image,negative_prompt,
+                        guidance_scale,num_inference_steps,width,
+                        height,controlnet_conditioning_scale):
     # giúp kết quả ko bị thay đổi lung tung khi chạy lại
     generator = torch.manual_seed(settings.seed)
 
@@ -26,7 +20,7 @@ def generate_controlnet(prompt ,image_path,pipeline,
         prompt=prompt,
         image=hint_image,
         # những thứ ko muốn tạo
-        negative_prompt=my_neg_prompt,
+        negative_prompt=negative_prompt,
         # bám theo prompt mạnh hay yếu
         guidance_scale=guidance_scale,
         # số bước diffusion

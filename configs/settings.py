@@ -7,8 +7,8 @@ import controlnet_hinter
 root_project = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # config
-output_folder = "static/outputs"
-upload_folder = "static/uploads"
+output_folder = os.path.join(root_project,"static/outputs")
+upload_folder = os.path.join(root_project,"static/uploads")
 
 # tham số chung
 guidance_scale = 0.75
@@ -54,7 +54,7 @@ controlnet_type = "canny_edge"
 base_model_id = "digiplay/Juggernaut_final"
 
 # cấu hình thông số sinh ảnh
-my_neg_prompt = "lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality"
+# my_neg_prompt = "lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality"
 controlnet_steps = 20
 controlnet_strength = 1.0
 num_image = 2

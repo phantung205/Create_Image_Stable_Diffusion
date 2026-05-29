@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>stable diffusion</title>
+     <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Stable Diffusion AI Generator</h1>
+    <form method="post" enctype="multipart/form-data">
+        <!-- ô nhập promt-->
+        <label>Prompt</label><br>
+        <input type="text"  name="prompt" placeholder="nhập yêu cầu bạn muốn tạo ảnh" required> <br><br>
+
+        <!--ô nhập promt ko muốn tạo ra-->
+        <label> Negative Prompt</label><br>
+        <input type="text"  name="negative_prompt" placeholder="nhập yêu cầu bạn ko muốn tạo ra trong ảnh" > <br><br>
+
+         <!--ô nhập số ảnh muốn tạo ra-->
+        <label> Number Image</label><br>
+        <input type="number" name="num_image" step="1" min="1" max="5" value="1" placeholder="nhập vào số ảnh bạn muốn tạo ra ko nhập mặc định là 1"> <br><br>
+
+        <!--ô chọn ảnh muốn để ảnh tạo ra dựa trên tạo ra-->
+        <label> Upload Image</label><br>
+        <input type="file"  name="image" > <br><br>
+
+        <!-- mức độ nghe theo ảnh -->
+        <label>ControlNet Strength</label><br>
+        <input type="number" step="0.1" min="0" max="2" name="controlnet_conditioning_scale" value="1.0" placeholder="AI nghe theo ảnh mạnh hay yếu"><br><br>
+
+        <!--bạn bám theo ảnh mực độ như nào-->
+        <label>Guidance Scale</label><br>
+        <input type="number" step="0.5" min="1" max="15" name="guidance_scale" value="7.5" placeholder="mức độ bảm lệnh prompt như nào trong 1-15"> <br><br>
+
+        <!--Số bước diffusion-->
+        <label>Inference Steps</label><br>
+        <input type="number" step="1" min="10" max="50" name="num_inference_steps" value="20" placeholder="Số bước diffusion 10-50"> <br><br>
+
+
+        <!-- width -->
+        <label> Width</label><br>
+        <input type="number" name="width" step="1" min="128" max="1024" value="512"><br><br>
+
+        <!-- height -->
+        <label>Height</label><br>
+        <input type="number" name="height" step="1" min="128" max="1024" value="512"><br><br>
+
+        <!-- button -->
+        <button type="submit">Generate</button>
+
+        <p id="loading" style=" display:none; color:blue; font-weight:bold;">
+            ⏳ Đang tạo ảnh...
+        </p>
+
+        <hr>
+
+    {% if image_paths %}
+        <h2>Generated Images</h2>
+        <div>
+            {% for image_path in image_paths %}
+                <img
+                    src="{{ image_path }}"
+                    width="300"
+                    style="margin:10px; border-radius:10px;"
+                >
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    </form>
+
+<script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function () {
+        document.getElementById(
+            "loading"
+        ).style.display = "block";
+    });
+
+</script>
+</body>
+</html>
